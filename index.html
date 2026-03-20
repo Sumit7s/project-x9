@@ -4,28 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Kishmish ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --primary: #ff4d6d;
+            --glass: rgba(255, 255, 255, 0.15);
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             text-align: center;
             color: white;
-            background-color: #1a1a1a;
+            background-color: #0f0f0f;
         }
 
         #bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: url('kishmish.jpg') center/cover no-repeat;
-            filter: brightness(0.6);
+            filter: brightness(0.5);
             z-index: -1;
-            transition: background 0.8s ease-in-out;
+            transition: all 1.5s ease;
         }
 
         #content {
@@ -35,73 +39,79 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
+            z-index: 2;
         }
 
         .box {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .box:hover {
-            transform: scale(1.02);
-            background: rgba(255, 255, 255, 0.15);
+            width: 85%;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
         }
 
         h2 {
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
-        .btn-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
         button {
-            padding: 12px 25px;
+            padding: 15px 35px;
             border: none;
             border-radius: 50px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 10px;
         }
 
-        .yes { background: #ff4d6d; color: white; }
-        .no { background: #595959; color: white; }
+        .yes { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4); }
+        .no { background: #444; color: #ccc; }
 
-        button:active { transform: scale(0.9); }
+        #catMeme {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            border-radius: 20px;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(255,0,0,0.5);
+        }
 
-        .heart {
+        /* Particles/Confetti CSS */
+        .confetti {
             position: absolute;
-            bottom: -50px;
-            font-size: 24px;
-            user-select: none;
-            z-index: 10;
-            pointer-events: none;
-            animation: floatUp 4s linear forwards;
+            width: 10px; height: 10px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            animation: fall 3s ease-out forwards;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        @keyframes fall {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
         }
+
+        /* Typing animation for the final message */
+        .typing {
+            overflow: hidden;
+            border-right: .15em solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary); } }
     </style>
 </head>
 <body>
@@ -111,102 +121,90 @@
     </audio>
 
     <div id="bg"></div>
+    <img src="cat-gun.jpg" id="catMeme">
 
     <div id="content">
-        <h2 id="mainTitle">Hey Kishmish... ❤️</h2>
-
-        <div class="box" onclick="nextMessage()" id="msg">
-            Tap to begin ❤️
+        <h2 id="mainTitle">Hello Kishmish ❤️</h2>
+        <div class="box" onclick="nextMessage()" id="msgBox">
+            <p id="msgText" style="font-size: 20px;">Tap to begin ❤️</p>
         </div>
 
         <div id="proposal" style="display:none; margin-top: 20px;">
             <h2 id="proposalText">Will you marry me? 💍</h2>
-            <div class="btn-container">
+            <div id="buttons">
                 <button class="yes" id="yesBtn" onclick="yes()">Yes ❤️</button>
                 <button class="no" id="noBtn" onclick="no()">No 😏</button>
             </div>
-            <p id="answer" style="font-size: 22px; font-weight: bold; margin-top: 25px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);"></p>
         </div>
     </div>
 
 <script>
     let messages = [
-        "Kishmish, you are my favorite person ❤️",
-        "You make my world brighter 🌸",
-        "I fall for you every day ❤️",
-        "Life is beautiful because of you 🌙",
-        "You are my everything ❤️"
+        "Every moment with you is a gift 🌸",
+        "You are the best thing that ever happened to me ❤️",
+        "Your smile is my favorite view 🌙",
+        "I want to spend forever with you...",
+        "I have a very important question ❤️"
     ];
 
-    let noLines = [
-        "Are you sure? 💍",
-        "Think again 😏",
-        "I’ll wait forever ❤️",
-        "Don’t break my heart 💔",
-        "Last chance 😄"
-    ];
-
+    let noLines = ["Think again! 💍", "Are you sure? 😏", "Wait... look behind you 🔫"];
     let count = 0;
     let noIndex = 0;
     let musicStarted = false;
 
     function nextMessage() {
-        // Start music on the first click
         if (!musicStarted) {
-            let music = document.getElementById("bgMusic");
-            music.play().catch(e => console.log("Music play blocked until interaction"));
+            document.getElementById("bgMusic").play();
             musicStarted = true;
         }
 
         if(count >= messages.length){
-            document.getElementById("proposal").style.display = "block";
-            document.getElementById("msg").style.display = "none";
+            document.getElementById("msgBox").style.display = "none";
             document.getElementById("mainTitle").style.display = "none";
+            document.getElementById("proposal").style.display = "block";
             return;
         }
 
-        document.getElementById("msg").innerText = messages[count];
+        document.getElementById("msgText").innerText = messages[count];
         count++;
     }
 
-    function yes(){
-        // Change background image
+    function yes() {
+        document.getElementById("catMeme").style.display = "none";
+        document.getElementById("buttons").style.display = "none";
+        document.getElementById("proposalText").innerHTML = "<div class='typing'>I LOVE YOU FOREVER! ❤️</div>";
+        document.getElementById("bg").style.filter = "brightness(0.8) saturate(1.2)";
         document.getElementById("bg").style.backgroundImage = "url('yes.jpg')";
-        document.getElementById("answer").innerText = "You just got the best husband! I love you! ❤️";
-        document.getElementById("proposalText").innerText = "YES! 💍✨";
-        
-        // Hide buttons
-        document.getElementById("yesBtn").style.display = "none";
-        document.getElementById("noBtn").style.display = "none";
 
-        // Celebration: Shower of hearts
-        setInterval(() => {
-            let h = document.createElement("div");
-            h.innerText = "❤️";
-            h.className = "heart";
-            h.style.left = Math.random() * 100 + "vw";
-            h.style.fontSize = (Math.random() * 20 + 20) + "px";
-            h.style.animationDuration = (Math.random() * 2 + 2) + "s";
-            
-            document.body.appendChild(h);
-
-            // Clean up memory
-            setTimeout(() => h.remove(), 4000);
-        }, 150);
+        // Confetti burst
+        for (let i = 0; i < 100; i++) {
+            createConfetti();
+        }
     }
 
-    function no(){
-        // Cycle through "No" messages
+    function createConfetti() {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = ['#ff4d6d', '#ffb3c1', '#fff', '#ff758f'][Math.floor(Math.random() * 4)];
+        c.style.width = Math.random() * 10 + 5 + 'px';
+        c.style.height = c.style.width;
+        c.style.animationDuration = Math.random() * 2 + 2 + 's';
+        c.style.opacity = Math.random();
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }
+
+    function no() {
+        document.getElementById("catMeme").style.display = "block";
         document.getElementById("proposalText").innerText = noLines[noIndex];
         noIndex = (noIndex + 1) % noLines.length;
         
-        // Make the "Yes" button grow to make it harder to say no!
         let yesBtn = document.getElementById("yesBtn");
-        let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-        yesBtn.style.fontSize = (currentSize + 5) + "px";
-        yesBtn.style.padding = (currentSize + 10) + "px";
+        let size = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+        yesBtn.style.fontSize = (size + 10) + "px";
+        yesBtn.style.padding = (size + 15) + "px";
     }
 </script>
-
 </body>
 </html>
